@@ -1,5 +1,7 @@
 # 徒然ノート — 品質ゲート（公開は legacy branch 配信・ビルド済み静的ファイル直下）
 # Lighthouse は真 Chrome で fail-closed（旧環境の「欠账」はこの audit ジョブで回収）
+# lockfile ジョブ: package.json（@11ty/eleventy 3.1.7 厳密ピン）から package-lock.json を
+# 再生してコミットする（[skip ci] で再帰防止）
 name: audit
 
 on:
@@ -35,3 +37,26 @@ jobs:
           urls: |
             https://tsurezure.jerrylabs.dev/
           configPath: ./lighthouserc.json
+
+  lockfile:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: package-lock.json を再生成（@11ty/eleventy 3.1.7 ピン済み）
+        run: npm install --package-lock-only
+      - name: 差分があればコミット（[skip ci] で再帰防止）
+        run: |
+          git config user.name "tsurezure-ci"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          if git diff --cached --quiet; then
+            echo "lockfile unchanged"
+          else
+            git commit -m "chore: package-lock.json を再生成（CI・[skip ci]）"
+            git push
+          fi
