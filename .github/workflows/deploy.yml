@@ -23,7 +23,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Pages を有効化（初回に実効・以後冪等）
+      - name: Pages を workflow 型へ矯正（legacy 残留の一回限りの解消）
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          api="https://api.github.com/repos/${{ github.repository }}/pages"
+          bt=$(curl -sSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$api" | python3 -c "import sys,json;print(json.load(sys.stdin).get('build_type',''))" 2>/dev/null || true)
+          echo "current build_type: ${bt:-none}"
+          if [ "$bt" = "legacy" ]; then
+            echo "legacy 設定を削除（直後の configure-pages が workflow 型で再作成する）"
+            code=$(curl -sSL -o /dev/null -w '%{http_code}' -X DELETE -H "Authorization: Bearer $GH_TOKEN" "$api")
+            echo "DELETE /pages -> HTTP $code"
+            case "$code" in
+              204|404) exit 0 ;;
+              *) echo "削除に失敗しました（権限かも。Settings → Pages で Source を GitHub Actions に手動変更してください）"; exit 1 ;;
+            esac
+          fi
+      - name: Pages を有効化（workflow 型で作成・冪等）
         uses: actions/configure-pages@v5
         with:
           enablement: true
@@ -53,6 +70,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: カスタムドメインの証書発行を待機（最長 8 分・fail-closed）
+        run: |
+          ok=0
+          for i in $(seq 1 48); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 https://tsurezure.jerrylabs.dev/ || true)
+            echo "try $i: HTTP $code"
+            if [ "$code" = "200" ]; then ok=1; break; fi
+            sleep 10
+          done
+          [ "$ok" = "1" ] || { echo "証書/サイトが時間内に利用可能になりませんでした"; exit 1; }
       - name: Lighthouse (fail-closed)
         uses: treosh/lighthouse-ci-action@v12
         with:
