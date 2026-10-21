@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>組版の手ざわり｜徒然ノート</title>
+  <title>組版の手ざわり｜雨然ノート</title>
   <meta name="description" content="字間は詰めず、行長は四十文字。Web の日本語組版について、このノート自身の設定を例に書き留めました。">
   
-  <meta property="og:title" content="組版の手ざわり｜徒然ノート">
-  <meta property="og:site_name" content="徒然ノート">
+  <meta property="og:title" content="組版の手ざわり｜雨然ノート">
+  <meta property="og:site_name" content="雨然ノート">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://tsurezure.jerrylabs.dev/archives/article-01-typesetting/">
   <meta property="og:description" content="字間は詰めず、行長は四十文字。Web の日本語組版について、このノート自身の設定を例に書き留めました。">
   <meta property="og:locale" content="ja_JP">
-  <link rel="alternate" type="application/atom+xml" title="徒然ノート" href="https://tsurezure.jerrylabs.dev/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="雨然ノート" href="https://tsurezure.jerrylabs.dev/feed.xml">
   <link rel="stylesheet" href="/assets/css/tokens.css">
   <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/chip-state.css">
@@ -23,14 +23,14 @@
     <div class="container">
       <a class="brand" href="/">
         <span class="brand__seal" aria-hidden="true">徒</span>
-        <span class="brand__name">徒然ノート</span>
+        <span class="brand__name">雨然ノート</span>
       </a>
       <nav class="site-nav" aria-label="グローバル">
         <ul class="site-nav__list">
           
           <li><a href="/">ホーム</a></li>
           
-          <li><a href="/archives/">記事</a></li>
+          <li><a href="/archives/" aria-current="page" title="現在地">記事</a></li>
           
           <li><a href="/about/">このサイトについて</a></li>
           
@@ -41,9 +41,8 @@
   <main id="main" class="container">
     <article class="prose">
   <header class="article-header">
-    <p class="article-header__meta"><time datetime="2026-10-13T00:00:00.000Z">2026年10月13日</time></p>
+    <p class="article-header__meta"><time datetime="2026-10-13T00:00:00.000Z">2026年10月13日</time><span class="chip chip--proofread">校正済み</span></p>
     <h1 class="article-header__title">組版の手ざわり</h1>
-    <p class="chip chip--proofread">校正済み</p>
   </header>
   <p>このノートを始めて、最初に決めたのは、字の並べ方でした。画面の上でも紙の上でも、日本語の文章は、静かに並んでいてほしい。そのために、このサイトでは字間を詰めていません。詰め組は行を引き締めて見せる技ですが、ここでは、字がひとりでに並ぶことにまかせることにしました。字間はゼロ。これが、このノートの始まりの設定です。</p>
 <p>行長は四十文字ほどにしています。長すぎる行は、目が次の行にもどる途中で迷子になります。四十文字ほどの行なら、息をつくように読み進められる。行送りは1.8。ゆったりと、しかし締まりを失わない幅です。窓の幅が768pxを下回ると、設定はそっと組み直されます。</p>
@@ -51,7 +50,7 @@
 <p>朱は、特別な席にだけ招きます。落款、徽章の細い罫、そして24px以上の大きな字。小さな文字に朱は使いません。見えにくくなるからです。この決めごとは、アクセシビリティの基準（WCAG 1.4.11）にもとづいています。飾りは、飾りのままでいられるように。</p>
 <p>組版とは、目に見えない気づかいのことだ、と思うことにしました。読むひとの注意を、言葉のほうへだけ向ける。そうして本文のそばに、静かに立っている。このノートの組み方は、まだ試行錯誤のさなかです——その「さなか」も含めて、書き留めておきます。</p>
   <footer class="article-footer">
-    <p class="seal" aria-hidden="true">徒</p>
+    <p class="seal-line"><span class="seal" aria-hidden="true">徒</span></p>
   </footer>
   <p class="back"><a href="/archives/">ノート一覧へ戻る</a></p>
 </article>
@@ -64,7 +63,7 @@
         <a href="/feed.xml">RSSフィード</a>
         <a href="/sitemap.xml">サイトマップ</a>
       </p>
-      <p class="site-footer__copy"><small>© 2026 徒然ノート</small></p>
+      <p class="site-footer__copy"><small>© 2026 雨然ノート</small></p>
     </div>
   </footer>
 </body>
