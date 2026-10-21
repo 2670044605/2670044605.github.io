@@ -8,105 +8,86 @@ body {
   background: var(--color-shironeri);
   color: var(--color-sumi);
   font-family: var(--font-serif);
-  font-size: var(--size-body);
-  line-height: 1.8;
-  letter-spacing: 0; /* 詰め組しない（D2） */
-  text-align: justify;
+  font-size: var(--font-size-body);
+  line-height: var(--leading);
+  letter-spacing: var(--tracking);
+  font-feature-settings: "palt" 0;
 }
 
-a {
-  color: var(--color-ai);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-  text-decoration-thickness: 1px;
-}
+a { color: var(--color-ai); text-decoration: underline; text-underline-offset: 3px; }
+a:visited { color: var(--color-ai); }
+a:hover { text-decoration-thickness: 2px; }
 
-.container { max-width: 40em; margin: 0 auto; padding: 0 1.4rem; }
+.container { max-width: calc(var(--measure) + 3rem); margin: 0 auto; padding: 0 1.5rem; }
 
-.skip-link {
-  position: absolute;
-  left: -9999px;
-}
-.skip-link:focus {
-  left: 0.5rem;
-  top: 0.5rem;
-  background: var(--color-shironeri);
-  border: var(--rule-hairline);
-  padding: 0.3rem 0.8rem;
-  z-index: 10;
-}
+/* スキップリンク（アクセシビリティ） */
+.skip { position: absolute; left: -9999px; top: 0; background: var(--color-shironeri); color: var(--color-ai); padding: 0.5rem 1rem; z-index: 10; }
+.skip:focus { left: 0.5rem; top: 0.5rem; }
 
-.site-header { border-bottom: var(--rule-hairline); }
-.site-header__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  padding-top: 0.9rem;
-  padding-bottom: 0.9rem;
-}
-.brand { margin: 0; display: flex; align-items: center; gap: 0.6rem; }
+/* ヘッダー */
+.site-header { padding-top: 2rem; }
+.brand { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; }
 .brand__seal {
-  width: 2.8rem;
-  height: 2.8rem;
-  line-height: 2.8rem;
-  text-align: center;
-  border: 2px solid var(--color-shu);
-  color: var(--color-shu);
-  border-radius: 3px;
-  font-size: 1.5rem;
+  display: inline-block; width: 2.75rem; height: 2.75rem;
+  background: var(--color-shu); color: var(--color-shironeri);
+  font-size: 1.5rem; line-height: 2.75rem; text-align: center;
+  border-radius: 4px;
 }
-.brand__name { font-size: 1.2rem; }
+.brand__name { font-size: 1.375rem; color: var(--color-sumi); font-weight: 600; }
 
-.site-nav__list { display: flex; gap: 1.4rem; list-style: none; margin: 0; padding: 0; }
-.site-nav__list a { text-decoration: none; }
-.site-nav__list a[aria-current="page"] {
-  border-bottom: var(--rule-current);
-  padding-bottom: 0.15rem;
+/* nav — 現在地は朱の罫（装飾として tokens 明文許可） */
+.site-nav { margin-top: 1.25rem; border-bottom: var(--rule-hairline); }
+.site-nav__list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.site-nav__list a {
+  display: inline-block; padding: 0.25rem 0 0.5rem; text-decoration: none;
+  color: var(--color-sumi); border-bottom: 2px solid transparent; margin-bottom: -1px;
 }
+.site-nav__list a[aria-current="page"] { border-bottom: var(--rule-current); }
 
-.hero { padding: 2.4rem 0 1.2rem; }
-.hero__title { font-size: 1.9rem; font-weight: 600; margin: 0 0 0.6rem; }
-.hero__tagline { margin: 0; color: var(--color-sumi); opacity: 0.85; }
-
-.section-title {
-  font-size: 1.15rem;
-  border-left: var(--rule-current);
-  padding-left: 0.6rem;
-  margin-top: 2.2rem;
-}
-
-.post-list { list-style: none; margin: 1rem 0 2.4rem; padding: 0; }
-.post-list li { padding: 0.8rem 0; border-bottom: var(--rule-hairline); }
-.post-meta { display: block; font-size: 0.8125rem; opacity: 0.75; }
-.post-desc { margin: 0.3rem 0 0; font-size: 0.9375rem; opacity: 0.85; }
-
-.prose { padding: 1.8rem 0 2.4rem; }
+/* 本文 */
+main { padding: 2.5rem 0 3rem; min-height: 50vh; }
+.prose { max-width: var(--measure); }
 .prose p { margin: 0 0 1.4em; }
-.prose h2, .prose h3 { line-height: 1.5; margin: 2em 0 0.8em; }
+.prose h2 { font-size: 1.25rem; margin: 2em 0 0.8em; font-weight: 600; }
+.prose blockquote { margin: 1.5em 0; padding: 0.2em 1.2em; border-left: var(--rule-hairline); }
+.rule { border: 0; border-top: var(--rule-hairline); margin: 0; }
 
-.article-header__meta { margin: 0 0 0.4rem; font-size: 0.8125rem; opacity: 0.75; }
-.article-header__title { font-size: 1.6rem; font-weight: 600; margin: 0 0 0.6rem; line-height: 1.5; }
-.article-header { margin-bottom: 1.8rem; }
-.article-footer { margin-top: 2.4rem; text-align: right; }
+/* 見出しまわり */
+.hero__title { font-size: 1.75rem; line-height: 1.5; margin: 0 0 0.5rem; font-weight: 600; }
+.hero__tagline { margin: 0 0 2.5rem; }
+.section-title { font-size: 1.25rem; font-weight: 600; border-bottom: var(--rule-hairline); padding-bottom: 0.5rem; margin: 2.5rem 0 0; }
+
+/* 記事一覧 */
+.post-list { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: var(--measure); }
+.post-list li { padding: 0.9rem 0; border-bottom: var(--rule-hairline); }
+.post-list a { font-size: 1.05rem; }
+.post-meta { display: inline-block; margin-right: 0.75rem; font-size: 0.8125rem; }
+.post-desc { margin: 0.35rem 0 0; font-size: 0.9375rem; }
+
+/* 記事ヘッダー */
+.article-header { max-width: var(--measure); margin-bottom: 2rem; }
+.article-header__meta { margin: 0 0 0.5rem; }
+.article-header__title { font-size: 1.625rem; line-height: 1.5; margin: 0 0 0.9rem; font-weight: 600; }
+.article-header .chip { margin: 0; }
+.article-footer { margin-top: 3rem; }
+.back { margin-top: 2rem; }
+
+/* 落款（朱印「徒」— 記事の結び） */
 .seal {
-  display: inline-block;
-  border: 2px solid var(--color-shu);
-  color: var(--color-shu);
-  border-radius: 3px;
-  padding: 0.1rem 0.5rem;
-  font-size: 1.5rem;
-  margin: 0;
+  display: inline-block; width: 3rem; height: 3rem;
+  background: var(--color-shu); color: var(--color-shironeri);
+  font-size: 1.75rem; line-height: 3rem; text-align: center;
+  border-radius: 4px; margin: 0;
 }
-.back { margin-top: 1.6rem; font-size: 0.9375rem; }
 
-.not-found { padding: 2.4rem 0; }
+/* フッター */
+.site-footer { padding: 2rem 0 3rem; }
+.site-footer__links { margin: 0 0 0.5rem; font-size: 0.875rem; }
+.site-footer__links a { margin-right: 1rem; }
+.site-footer__copy { margin: 0; font-size: 0.8125rem; color: var(--color-sumi); }
 
-.site-footer { margin-top: 2.4rem; padding-bottom: 2.4rem; }
-.rule { border: 0; border-top: var(--rule-hairline); margin: 0 0 1rem; }
-.site-footer__links { margin: 0 0 0.4rem; font-size: 0.875rem; }
-.site-footer__copy { margin: 0; opacity: 0.75; }
+/* 404 */
+.not-found { padding: 1rem 0 2rem; }
 
 @media (max-width: 768px) {
   body { font-size: 16px; }
