@@ -1,0 +1,16 @@
+---
+layout: base.njk
+ogType: article
+---
+<article class="prose">
+  <header class="article-header">
+    <p class="article-header__meta"><time datetime="{{ page.date.toISOString() }}">{{ page.date | dateJa }}</time></p>
+    <h1 class="article-header__title">{{ title }}</h1>
+    <p class="chip chip--proofread">{{ uicopy.badgeProofread }}</p>
+  </header>
+  {{ content | safe }}
+  <footer class="article-footer">
+    <p class="seal" aria-hidden="true">{{ uicopy.sealChar }}</p>
+  </footer>
+  <p class="back"><a href="/archives/">{{ uicopy.backToArchive }}</a></p>
+</article>

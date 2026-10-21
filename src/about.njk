@@ -1,0 +1,10 @@
+---
+layout: base.njk
+permalink: /about/
+---
+<div class="prose">
+  <h1 class="hero__title">{{ uicopy.aboutHeading }}</h1>
+  {% for paragraph in uicopy.aboutBody %}
+  <p>{{ paragraph }}</p>
+  {% endfor %}
+</div>

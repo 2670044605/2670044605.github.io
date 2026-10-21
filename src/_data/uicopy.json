@@ -1,0 +1,31 @@
+{
+  "lang": "ja",
+  "siteName": "徒然ノート",
+  "tagline": "日々の徒然を、静かに書き留めるノート。",
+  "description": "組版と伝統色をたずねる、ちいさな日本語のノート。",
+  "nav": [
+    { "label": "ホーム", "path": "/" },
+    { "label": "記事", "path": "/archives/" },
+    { "label": "このサイトについて", "path": "/about/" }
+  ],
+  "ariaCurrent": "現在地",
+  "sealChar": "徒",
+  "skipToContent": "本文へスキップ",
+  "latestHeading": "最近のノート",
+  "archiveHeading": "ノート一覧",
+  "archiveLead": "書き留めたものは、新しいものから順に、ここに並べてあります。",
+  "backToArchive": "ノート一覧へ戻る",
+  "aboutHeading": "このサイトについて",
+  "aboutBody": [
+    "このサイトは、日々のよしなしごとを書き留めるための、ちいさなノートです。",
+    "組版の手ざわりや、伝統色の名前をたずねながら、ていねいに、静かに、書き留めています。",
+    "名前の「徒然」は、『徒然草』の「つれづれなるままに」の一句からいただきました。ためになる話は多くありませんが、それでも書き留めておく価値はある——そんな気持ちで綴っています。"
+  ],
+  "notFoundHeading": "お探しのページが見つかりません",
+  "notFoundBody": "お探しのページは、移動したか、もう存在しないのかもしれません。URL をご確認のうえ、ホームへお戻りください。",
+  "backHome": "ホームに戻る",
+  "badgeProofread": "校正済み",
+  "footerFeed": "RSSフィード",
+  "footerSitemap": "サイトマップ",
+  "copyright": "© 2026 徒然ノート"
+}

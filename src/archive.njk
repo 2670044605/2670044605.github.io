@@ -1,0 +1,18 @@
+---
+layout: base.njk
+permalink: /archives/
+---
+<div class="hero">
+  <h1 class="hero__title">{{ uicopy.archiveHeading }}</h1>
+  <p class="hero__tagline">{{ uicopy.archiveLead }}</p>
+</div>
+<ul class="post-list">
+  {% for post in collections.posts | reverse %}
+  <li>
+    <time class="post-meta" datetime="{{ post.date.toISOString() }}">{{ post.date | dateJa }}</time>
+    <a href="{{ post.url }}">{{ post.data.title }}</a>
+    <span class="chip chip--proofread">{{ uicopy.badgeProofread }}</span>
+    {% if post.data.description %}<p class="post-desc">{{ post.data.description }}</p>{% endif %}
+  </li>
+  {% endfor %}
+</ul>

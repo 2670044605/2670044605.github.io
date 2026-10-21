@@ -1,0 +1,61 @@
+# 徒然ノート — GitHub Actions → GitHub Pages（D3 ロックどおり）
+# Lighthouse は真 Chrome で fail-closed（旧環境の「欠账」はこの audit ジョブで回収）
+# 注記: package-lock は旧機由来のため未同梱。package.json で @11ty/eleventy 3.1.7 を厳密ピン留めし、
+#       CI は npm install で構築する（lockfile は後日 git push で復元予定）。
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pages を有効化（初回に実効・以後冪等）
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install & Build
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  audit:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lighthouse (fail-closed)
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://tsurezure.jerrylabs.dev/
+          configPath: ./lighthouserc.json

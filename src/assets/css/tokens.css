@@ -1,0 +1,33 @@
+/* ============================================================
+   徒然ノート — design tokens（唯一の事実の源 / Single source of truth）
+   出典: 「Sabanote 和色大辞典」（色値の単一ソース）
+   視覚方針: 方向A「墨 × 白練 × 藍」
+
+   規約（design-spec 2.1 より・変更不可）:
+   - 朱 #EB6101 は「落款・徽章の罫・装飾・罫線・24px 以上の大字」に限る。
+     24px 未満の文字には使わない（WCAG 1.4.11）。
+   - 利休鼠 #888E7E は罫線専用。
+   - 排版: 行送り 1.8 / strict（字間ゼロ）。
+   ============================================================ */
+
+:root {
+  /* 色 — Sabanote 和色大辞典 */
+  --color-sumi: #595857;        /* 墨 */
+  --color-shironeri: #FCFAF2;   /* 白練 */
+  --color-ai: #165E83;          /* 藍 */
+  --color-shu: #EB6101;         /* 朱 */
+  --color-rikyu-nezumi: #888E7E; /* 利休鼠 */
+
+  /* 排版 */
+  --leading-body: 1.8;
+  --measure-body: 40em;
+  --size-body: 17px;      /* 本文（16px 以上） */
+  --breakpoint: 768px;         /* ブレークポイント（メディアクエリ内は直書き） */
+
+  /* 書体 */
+  --font-serif: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", "BIZ UDMincho", serif;
+
+  /* 罫 */
+  --rule-hairline: 1px solid var(--color-rikyu-nezumi);
+  --rule-current: 2px solid var(--color-shu); /* nav 現在地罫（装飾として tokens 明文許可） */
+}

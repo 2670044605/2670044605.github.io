@@ -1,0 +1,20 @@
+---
+permalink: chip-state.css
+eleventyExcludeFromCollections: true
+---
+/* 徽章（chip）の状態 — 状態の追加はこのファイルへ。
+   朱は徽章の罫にのみ使用（tokens 規約どおり。文字には使わない）。 */
+.chip {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  margin-left: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  vertical-align: middle;
+  border: 1px solid var(--color-rikyu-nezumi);
+  border-radius: 3px;
+  color: var(--color-sumi);
+  background: transparent;
+}
+.chip--proofread { border-color: var(--color-shu); }
+.chip--draft { border-style: dashed; }
