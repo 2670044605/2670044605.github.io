@@ -1,4 +1,4 @@
-/* 雨然ノート — base stylesheet（色・罫・排版はすべて tokens.css から） */
+/* 徒然ノート — base stylesheet（色・罫・排版はすべて tokens.css から） */
 *, *::before, *::after { box-sizing: border-box; }
 
 html { -webkit-text-size-adjust: 100%; }
