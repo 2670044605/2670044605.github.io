@@ -1,0 +1,99 @@
+/* 徒然ノート — base stylesheet（色・罫・排版はすべて tokens.css から） */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-shironeri);
+  color: var(--color-sumi);
+  font-family: var(--font-serif);
+  font-size: var(--font-size-body);
+  line-height: var(--leading);
+  letter-spacing: var(--tracking);
+  font-feature-settings: "palt" 0;
+}
+
+a { color: var(--color-ai); text-decoration: underline; text-underline-offset: 3px; }
+a:visited { color: var(--color-ai); }
+a:hover { text-decoration-thickness: 2px; }
+
+.container { max-width: calc(var(--measure) + 3rem); margin: 0 auto; padding: 0 1.5rem; }
+
+/* スキップリンク（アクセシビリティ） */
+.skip { position: absolute; left: -9999px; top: 0; background: var(--color-shironeri); color: var(--color-ai); padding: 0.5rem 1rem; z-index: 10; }
+.skip:focus { left: 0.5rem; top: 0.5rem; }
+
+/* ヘッダー */
+.site-header { padding-top: 2rem; }
+.brand { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.brand__seal {
+  display: inline-block; width: 2.75rem; height: 2.75rem;
+  background: var(--color-shu); color: var(--color-shironeri);
+  font-size: 1.5rem; line-height: 2.75rem; text-align: center;
+  border-radius: 4px;
+}
+.brand__name { font-size: 1.375rem; color: var(--color-sumi); font-weight: 600; }
+
+/* nav — 現在地は朱の罫（装飾として tokens 明文許可） */
+.site-nav { margin-top: 1.25rem; border-bottom: var(--rule-hairline); }
+.site-nav__list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.site-nav__list a {
+  display: inline-block; padding: 0.25rem 0 0.5rem; text-decoration: none;
+  color: var(--color-sumi); border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.site-nav__list a[aria-current="page"] { border-bottom: var(--rule-current); }
+
+/* 本文 */
+main { padding: 2.5rem 0 3rem; min-height: 50vh; }
+.prose { max-width: var(--measure); }
+.prose p { margin: 0 0 1.4em; }
+.prose h2 { font-size: 1.25rem; margin: 2em 0 0.8em; font-weight: 600; }
+.prose blockquote { margin: 1.5em 0; padding: 0.2em 1.2em; border-left: var(--rule-hairline); }
+.rule { border: 0; border-top: var(--rule-hairline); margin: 0; }
+
+/* 見出しまわり */
+.hero__title { font-size: 1.75rem; line-height: 1.5; margin: 0 0 0.5rem; font-weight: 600; }
+.hero__tagline { margin: 0 0 2.5rem; }
+.section-title { font-size: 1.25rem; font-weight: 600; border-bottom: var(--rule-hairline); padding-bottom: 0.5rem; margin: 2.5rem 0 0; }
+
+/* 記事一覧 */
+.post-list { list-style: none; margin: 1.5rem 0 0; padding: 0; max-width: var(--measure); }
+.post-list li { padding: 0.9rem 0; border-bottom: var(--rule-hairline); }
+.post-list a { font-size: 1.05rem; }
+.post-meta { display: inline-block; margin-right: 0.75rem; font-size: 0.8125rem; }
+.post-desc { margin: 0.35rem 0 0; font-size: 0.9375rem; }
+
+/* 記事ヘッダー */
+.article-header { max-width: var(--measure); margin-bottom: 2rem; }
+.article-header__meta { margin: 0 0 0.5rem; }
+.article-header__title { font-size: 1.625rem; line-height: 1.5; margin: 0 0 0.9rem; font-weight: 600; }
+.article-header .chip { margin: 0; }
+.article-footer { margin-top: 3rem; }
+.back { margin-top: 2rem; }
+
+/* 落款（朱印「徒」— 記事の結び） */
+.seal {
+  display: inline-block; width: 3rem; height: 3rem;
+  background: var(--color-shu); color: var(--color-shironeri);
+  font-size: 1.75rem; line-height: 3rem; text-align: center;
+  border-radius: 4px; margin: 0;
+}
+
+/* フッター */
+.site-footer { padding: 2rem 0 3rem; }
+.site-footer__links { margin: 0 0 0.5rem; font-size: 0.875rem; }
+.site-footer__links a { margin-right: 1rem; }
+.site-footer__copy { margin: 0; font-size: 0.8125rem; color: var(--color-sumi); }
+
+/* 404 */
+.not-found { padding: 1rem 0 2rem; }
+
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .container { padding: 0 1.1rem; }
+  .brand__seal { width: 2.4rem; height: 2.4rem; line-height: 2.4rem; font-size: 1.3rem; }
+  .hero__title { font-size: 1.5rem; }
+  .article-header__title { font-size: 1.35rem; }
+  .site-nav__list { gap: 1.1rem; }
+}

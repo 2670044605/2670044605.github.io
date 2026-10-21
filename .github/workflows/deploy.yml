@@ -1,8 +1,6 @@
-# 徒然ノート — GitHub Actions → GitHub Pages（D3 ロックどおり）
+# 徒然ノート — 品質ゲート（公開は legacy branch 配信・ビルド済み静的ファイル直下）
 # Lighthouse は真 Chrome で fail-closed（旧環境の「欠账」はこの audit ジョブで回収）
-# 注記: package-lock は旧機由来のため未同梱。package.json で @11ty/eleventy 3.1.7 を厳密ピン留めし、
-#       CI は npm install で構築する（lockfile は後日 git push で復元予定）。
-name: deploy
+name: audit
 
 on:
   push:
@@ -11,66 +9,17 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: audit
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Pages を workflow 型へ矯正（legacy 残留の一回限りの解消）
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -e
-          api="https://api.github.com/repos/${{ github.repository }}/pages"
-          bt=$(curl -sSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$api" | python3 -c "import sys,json;print(json.load(sys.stdin).get('build_type',''))" 2>/dev/null || true)
-          echo "current build_type: ${bt:-none}"
-          if [ "$bt" = "legacy" ]; then
-            echo "legacy 設定を削除（直後の configure-pages が workflow 型で再作成する）"
-            code=$(curl -sSL -o /dev/null -w '%{http_code}' -X DELETE -H "Authorization: Bearer $GH_TOKEN" "$api")
-            echo "DELETE /pages -> HTTP $code"
-            case "$code" in
-              204|404) exit 0 ;;
-              *) echo "削除に失敗しました（権限かも。Settings → Pages で Source を GitHub Actions に手動変更してください）"; exit 1 ;;
-            esac
-          fi
-      - name: Pages を有効化（workflow 型で作成・冪等）
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Install & Build
-        run: |
-          npm install --no-audit --no-fund
-          npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
-
   audit:
-    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: カスタムドメインの証書発行を待機（最長 8 分・fail-closed）
+      - name: カスタムドメインの証書/配信を待機（最長 8 分・fail-closed）
         run: |
           ok=0
           for i in $(seq 1 48); do
@@ -79,7 +28,7 @@ jobs:
             if [ "$code" = "200" ]; then ok=1; break; fi
             sleep 10
           done
-          [ "$ok" = "1" ] || { echo "証書/サイトが時間内に利用可能になりませんでした"; exit 1; }
+          [ "$ok" = "1" ] || { echo "時間内に利用可能になりませんでした"; exit 1; }
       - name: Lighthouse (fail-closed)
         uses: treosh/lighthouse-ci-action@v12
         with:

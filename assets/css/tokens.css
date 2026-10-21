@@ -1,0 +1,41 @@
+/* ============================================================
+   徒然ノート — design tokens（唯一の事実の源 / Single source of truth）
+   出典: 「Sabanote 和色大辞典」（色値の単一ソース）
+   視覚方針: 方向A「墨 × 白練 × 藍」
+
+   規約（design-spec 2.1 より・変更不可）:
+   - 朱 #EB6101 は「落款・徽章の罫・装飾・罫線・24px 以上の大字」に限る。
+     24px 未満の文字には使わない（WCAG 1.4.11）。
+   - 利休鼠 #888E7E は罫線専用。
+   - 排版: 行送り 1.8 / strict（字間ゼロ）。
+   - このファイルを改めるときは phase-2/tokens.css と
+     site/src/assets/css/tokens.css の両側を同時に改め、
+     sha256 対照を取り直すこと（旧機 8956ef5d… は喪失、2026-10-21 再採番）。
+   ============================================================ */
+
+:root {
+  /* 墨（すみ）— 本文の文字色 */
+  --color-sumi: #595857;
+  /* 白練（しろねり）— 地色 */
+  --color-shironeri: #FBFAF5;
+  /* 藍（あい）— リンク・強調 */
+  --color-ai: #165E83;
+  /* 朱（しゅ）— 落款・徽章の罫・装飾（上記の規約どおり） */
+  --color-shu: #EB6101;
+  /* 利休鼠（りきゅうねずみ）— 罫線専用 */
+  --color-rikyu-nezumi: #888E7E;
+
+  /* 排版トークン */
+  --leading: 1.8;              /* 行送り */
+  --tracking: 0;               /* 字間（詰め組なし） */
+  --measure: 40em;             /* 行長 */
+  --font-size-body: 17px;      /* 本文（16px 以上） */
+  --breakpoint: 768px;         /* ブレークポイント（メディアクエリ内は直書き） */
+
+  /* 書体 */
+  --font-serif: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", "BIZ UDMincho", serif;
+
+  /* 罫 */
+  --rule-hairline: 1px solid var(--color-rikyu-nezumi);
+  --rule-current: 2px solid var(--color-shu); /* nav 現在地罫（装飾として tokens 明文許可） */
+}
